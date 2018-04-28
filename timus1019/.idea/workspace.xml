@@ -26,8 +26,11 @@
       <file leaf-file-name="list" pinned="false" current-in-tab="false">
         <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/list">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13710">
-              <caret line="914" column="19" selection-start-line="914" selection-start-column="19" selection-end-line="914" selection-end-column="19" />
+            <state relative-caret-position="346">
+              <caret line="1739" column="19" selection-start-line="1739" selection-start-column="19" selection-end-line="1739" selection-end-column="19" />
+              <folding>
+                <element signature="e#57574#57996#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -35,8 +38,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="91" column="37" selection-start-line="91" selection-start-column="37" selection-end-line="91" selection-end-column="37" />
+            <state relative-caret-position="365">
+              <caret line="102" column="32" lean-forward="true" selection-start-line="102" selection-start-column="32" selection-end-line="102" selection-end-column="32" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -124,23 +127,24 @@
       <workItem from="1524919447301" duration="266000" />
       <workItem from="1524919728428" duration="4120000" />
       <workItem from="1524924459979" duration="78000" />
-      <workItem from="1524924548306" duration="210000" />
+      <workItem from="1524924548306" duration="1828000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4674000" />
+    <option name="totallyTimeSpent" value="6292000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20520833" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20520833" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32879376" />
       <window_info anchor="bottom" id="CMake" order="7" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.27918288" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27918288" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -149,7 +153,6 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32879376" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -166,15 +169,15 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>149</line>
+          <line>139</line>
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>103</line>
-          <option name="timeStamp" value="5" />
+          <line>101</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="7" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
@@ -188,6 +191,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13710">
           <caret line="914" column="19" selection-start-line="914" selection-start-column="19" selection-end-line="914" selection-end-column="19" />
+          <folding>
+            <element signature="e#57574#57996#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -237,15 +243,18 @@
     </entry>
     <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/list">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13710">
-          <caret line="914" column="19" selection-start-line="914" selection-start-column="19" selection-end-line="914" selection-end-column="19" />
+        <state relative-caret-position="346">
+          <caret line="1739" column="19" selection-start-line="1739" selection-start-column="19" selection-end-line="1739" selection-end-column="19" />
+          <folding>
+            <element signature="e#57574#57996#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="91" column="37" selection-start-line="91" selection-start-column="37" selection-end-line="91" selection-end-column="37" />
+        <state relative-caret-position="365">
+          <caret line="102" column="32" lean-forward="true" selection-start-line="102" selection-start-column="32" selection-end-line="102" selection-end-column="32" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

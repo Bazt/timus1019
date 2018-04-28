@@ -56,7 +56,7 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
 
     for (auto opposite_it = opposite.begin(); opposite_it != opposite.end(); opposite_it++) {
 
-        if (!opposite_it -> intersectsWith(current)) {
+        if (!opposite_it->intersectsWith(current)) {
             continue;
         }
 
@@ -73,13 +73,11 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
         }
 
         //intersection case
+
         bool shouldMoveBegin = current.begin <= opposite_it->begin;
-        if (shouldMoveBegin)
-        {
+        if (shouldMoveBegin) {
             opposite_it->begin = current.end;
-        }
-        else
-        {
+        } else {
             opposite_it->end = current.begin;
         }
     }
@@ -101,32 +99,24 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
     //===============================================
     //           update same list
 
-    list<segment> related;
-    for (auto it = same.begin(); it != same.end(); it++) {
-        if (current.intersectsWith(*it)) {
-            related.push_back(*it);
-        }
-    }
-
-    if (!related.empty()) {
-
-        for (auto s : related) {
-            if (s.begin < current.begin) {
-                current.begin = s.begin;
-            }
-            if (s.end > current.end) {
-                current.end = s.end;
-            }
-        }
-    }
-
     if (same.empty()) {
         same.push_back(current);
     } else {
+        bool added = false;
         for (auto it = same.begin(); it != same.end(); it++) {
-            if (current.locatedLeftFrom(*it)) {
+            if (current.intersectsWith(*it)) {
+                current.begin = min(current.begin, it->begin);
+                current.end = max(current.end, it->end);
+                it = same.erase(it);
+            } else if (current.locatedLeftFrom(*it)) {
                 same.insert(it, current);
+                added = true;
+                break;
             }
+        }
+
+        if (!added) {
+            same.push_back(current);
         }
     }
 
