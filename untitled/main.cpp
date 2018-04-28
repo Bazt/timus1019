@@ -8,8 +8,8 @@ struct segment {
 
     segment(int begin = 0, int end = 0) : begin(begin), end(end) {}
 
-    bool contains(segment x) {
-        return begin <= x.begin && end >= x.end;
+    bool isProperSupersetOf(segment x) {
+        return begin < x.begin && end > x.end;
     }
 
     bool intersectsWith(segment x) {
@@ -49,25 +49,17 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
     //       update opposite list
 
     for (auto opposite_it = opposite.begin(); opposite_it != opposite.end(); opposite_it++) {
-        if (opposite_it->equals(current)) {
+
+        if (opposite_it->equals(current) || current.isProperSupersetOf(*opposite_it)) {
             opposite_it = opposite.erase(opposite_it);
             continue;
         }
 
-        if (opposite_it->contains(current)) {
-            segment second(opposite_it->begin, current.begin);
+        if (opposite_it->isProperSupersetOf(current)) {
+            segment first(opposite_it->begin, current.begin);
             opposite_it->begin = current.end;
-            if (!second.isEmpty()) {
-                opposite.insert(opposite_it, second);
-            }
-            if (opposite_it->isEmpty()) {
-                opposite_it = opposite.erase(opposite_it);
-            }
+            opposite.insert(opposite_it, first);
             continue;
-        }
-
-        if (current.contains(*opposite_it)) {
-            opposite_it = opposite.erase(opposite_it);
         }
     }
 
@@ -81,10 +73,10 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
     //===============================================
     //           update same list
     for (auto it = same.begin(); it != same.end(); it++) {
-        if (it->contains(current)) {
+        if (it->isProperSupersetOf(current)) {
             continue;
         }
-        if (current.contains(*it)) {
+        if (current.isProperSupersetOf(*it)) {
             it = same.erase(it);
         }
     }
