@@ -6,27 +6,29 @@ using namespace std;
 struct segment {
     int begin, end;
 
+    static const int maxValue = 1000000000;
+
     segment(int begin = 0, int end = 0) : begin(begin), end(end) {}
 
-    bool isProperSupersetOf(segment x) {
+    bool isProperSupersetOf(segment &x) {
         return begin < x.begin && end > x.end;
     }
 
-    bool intersectsWith(segment x) {
+    bool intersectsWith(segment &x) {
         int maxbegin = begin > x.begin ? begin : x.begin;
         int minend = end < x.end ? end : x.end;
         return maxbegin <= minend;
     }
 
-    bool hasSharedPart(segment x) {
+    bool hasSharedPart(segment &x) {
         return intersectsWith(x) && x.begin != end && x.end != begin;
     }
 
-    bool equals(segment x) {
+    bool equals(segment &x) {
         return x.end == end && x.begin == begin;
     }
 
-    segment unite(segment x) {
+    segment unite(segment &x) {
         segment result;
         result.begin = x.begin < begin ? x.begin : begin;
         result.end = x.end > end ? x.end : end;
@@ -37,6 +39,10 @@ struct segment {
 
     bool isEmpty() {
         return begin == end;
+    }
+
+    bool locatedLeftFrom(segment &x) {
+        return x.begin > end;
     }
 
     int length() {
@@ -50,6 +56,10 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
 
     for (auto opposite_it = opposite.begin(); opposite_it != opposite.end(); opposite_it++) {
 
+        if (!opposite_it -> intersectsWith(current)) {
+            continue;
+        }
+
         if (opposite_it->equals(current) || current.isProperSupersetOf(*opposite_it)) {
             opposite_it = opposite.erase(opposite_it);
             continue;
@@ -61,41 +71,63 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
             opposite.insert(opposite_it, first);
             continue;
         }
-    }
 
-    for (auto white_it = opposite.begin(); white_it != opposite.end(); white_it++) {
-        if (white_it->hasSharedPart(current)) {
-            white_it->begin = current.end > white_it->begin ? current.end : white_it->begin;
-            white_it->end = current.begin > white_it->end ? white_it->end : current.begin;
+        //intersection case
+        bool shouldMoveBegin = current.begin <= opposite_it->begin;
+        if (shouldMoveBegin)
+        {
+            opposite_it->begin = current.end;
+        }
+        else
+        {
+            opposite_it->end = current.begin;
         }
     }
+
+//    for (auto opposite_it = opposite.begin(); opposite_it != opposite.end(); opposite_it++) {
+//        if (opposite_it->hasSharedPart(current)) {
+//            bool shouldMoveBegin = current.begin <= opposite_it->begin;
+//            if (shouldMoveBegin)
+//            {
+//                opposite_it->begin = current.end;
+//            }
+//            else
+//            {
+//                opposite_it->end = current.begin;
+//            }
+//        }
+
 
     //===============================================
     //           update same list
+
+    list<segment> related;
     for (auto it = same.begin(); it != same.end(); it++) {
-        if (it->isProperSupersetOf(current)) {
-            continue;
-        }
-        if (current.isProperSupersetOf(*it)) {
-            it = same.erase(it);
+        if (current.intersectsWith(*it)) {
+            related.push_back(*it);
         }
     }
 
-    for (auto it = same.begin(); it != same.end(); it++) {
-        if (it->intersectsWith(current)) {
-            current = current.unite(*it);
-            it = same.erase(it);
-        }
-    };
+    if (!related.empty()) {
 
-    for (auto it = same.begin(); it != same.end(); it++) {
-        if (it->begin > current.end) {
-            same.insert(it, current);
+        for (auto s : related) {
+            if (s.begin < current.begin) {
+                current.begin = s.begin;
+            }
+            if (s.end > current.end) {
+                current.end = s.end;
+            }
         }
     }
 
     if (same.empty()) {
         same.push_back(current);
+    } else {
+        for (auto it = same.begin(); it != same.end(); it++) {
+            if (current.locatedLeftFrom(*it)) {
+                same.insert(it, current);
+            }
+        }
     }
 
 }
@@ -110,7 +142,7 @@ int main() {
     cin >> n;
     const int r = n;
     list<segment> black{};
-    list<segment> white{segment(0, 1000000000)};
+    list<segment> white{segment(0, segment::maxValue)};
     for (int i = 0; i < r; i++) {
         cin >> begin >> end >> color;
         current.begin = begin;

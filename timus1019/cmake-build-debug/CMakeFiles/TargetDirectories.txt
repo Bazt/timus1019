@@ -1,0 +1,3 @@
+/Users/osherbakov/Documents/GitHub/timus1019/timus1019/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/osherbakov/Documents/GitHub/timus1019/timus1019/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/osherbakov/Documents/GitHub/timus1019/timus1019/cmake-build-debug/CMakeFiles/timus1019.dir
