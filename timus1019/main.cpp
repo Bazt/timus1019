@@ -56,10 +56,6 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
 
     for (auto opposite_it = opposite.begin(); opposite_it != opposite.end(); opposite_it++) {
 
-        if (!opposite_it->intersectsWith(current)) {
-            continue;
-        }
-
         if (opposite_it->equals(current) || current.isProperSupersetOf(*opposite_it)) {
             opposite_it = opposite.erase(opposite_it);
             continue;
@@ -71,30 +67,18 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
             opposite.insert(opposite_it, first);
             continue;
         }
-
-        //intersection case
-
-        bool shouldMoveBegin = current.begin <= opposite_it->begin;
-        if (shouldMoveBegin) {
-            opposite_it->begin = current.end;
-        } else {
-            opposite_it->end = current.begin;
-        }
     }
 
-//    for (auto opposite_it = opposite.begin(); opposite_it != opposite.end(); opposite_it++) {
-//        if (opposite_it->hasSharedPart(current)) {
-//            bool shouldMoveBegin = current.begin <= opposite_it->begin;
-//            if (shouldMoveBegin)
-//            {
-//                opposite_it->begin = current.end;
-//            }
-//            else
-//            {
-//                opposite_it->end = current.begin;
-//            }
-//        }
-
+    for (auto opposite_it = opposite.begin(); opposite_it != opposite.end(); opposite_it++) {
+        if (opposite_it->hasSharedPart(current)) {
+            bool shouldMoveBegin = current.begin <= opposite_it->begin;
+            if (shouldMoveBegin) {
+                opposite_it->begin = current.end;
+            } else {
+                opposite_it->end = current.begin;
+            }
+        }
+    }
 
     //===============================================
     //           update same list
