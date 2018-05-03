@@ -14,14 +14,14 @@ struct segment {
         return begin < x.begin && end > x.end;
     }
 
+    bool isSupersetOf(segment &x) {
+        return begin <= x.begin && end >= x.end;
+    }
+
     bool intersectsWith(segment &x) {
         int maxbegin = begin > x.begin ? begin : x.begin;
         int minend = end < x.end ? end : x.end;
         return maxbegin <= minend;
-    }
-
-    bool hasSharedPart(segment &x) {
-        return intersectsWith(x) && x.begin != end && x.end != begin;
     }
 
     bool equals(segment &x) {
@@ -54,25 +54,45 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
     // ======================================================
     //       update opposite list
 
+    list<list<segment>::iterator> toBeRemoved;
+    for (auto opposite_it = opposite.begin(); opposite_it != opposite.end(); opposite_it++) {
+        if (current.isSupersetOf(*opposite_it)) {
+            toBeRemoved.push_back(opposite_it);
+
+        }
+    }
+    for (auto it : toBeRemoved) {
+        opposite.erase(it);
+    }
+
+
     for (auto opposite_it = opposite.begin(); opposite_it != opposite.end(); opposite_it++) {
 
-        if (opposite_it->equals(current) || current.isProperSupersetOf(*opposite_it)) {
-            opposite_it = opposite.erase(opposite_it);
+        segment op = *opposite_it;
+        if (current.end <= opposite_it->begin || opposite_it -> end <= current.begin) {
             continue;
         }
 
-        if (opposite_it->isProperSupersetOf(current)) {
+        if (current.isSupersetOf(*opposite_it)) {
+            opposite_it = opposite.erase(opposite_it);
+            if (opposite_it != opposite.begin()) {
+                opposite_it--;
+            }
+            op = *opposite_it;
+        } else if (opposite_it->isProperSupersetOf(current)) {
             segment first(opposite_it->begin, current.begin);
             opposite_it->begin = current.end;
             opposite.insert(opposite_it, first);
-            continue;
+            break;
         }
     }
-
     for (auto opposite_it = opposite.begin(); opposite_it != opposite.end(); opposite_it++) {
-        if (opposite_it->hasSharedPart(current)) {
-            bool shouldMoveBegin = current.begin <= opposite_it->begin;
-            if (shouldMoveBegin) {
+        if (current.end <= opposite_it->begin || opposite_it -> end <= current.begin) {
+            continue;
+        }
+        if (current.intersectsWith(*opposite_it) ) {
+            if (current.begin < opposite_it->begin)
+            {
                 opposite_it->begin = current.end;
             } else {
                 opposite_it->end = current.begin;
@@ -80,27 +100,27 @@ void processSegment(segment &current, list<segment> &same, list<segment> &opposi
         }
     }
 
+
+
+
     //===============================================
     //           update same list
 
     if (same.empty()) {
         same.push_back(current);
     } else {
-        bool added = false;
-        for (auto it = same.begin(); it != same.end(); it++) {
-            if (current.intersectsWith(*it)) {
-                current.begin = min(current.begin, it->begin);
-                current.end = max(current.end, it->end);
-                it = same.erase(it);
-            } else if (current.locatedLeftFrom(*it)) {
+        for (auto it = same.begin();;) {
+            if (it == same.end() || current.locatedLeftFrom(*it)) {
                 same.insert(it, current);
-                added = true;
                 break;
             }
-        }
+            if (current.intersectsWith(*it)) {
+                current = current.unite(*it);
+                it = same.erase(it);
+                continue;
+            }
+            it++;
 
-        if (!added) {
-            same.push_back(current);
         }
     }
 
